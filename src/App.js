@@ -5,11 +5,11 @@ import SearchResults from './components/SearchResults/SearchResults.js';
 import Playlist from './components/Playlist/Playlist.js';
 
 const tempHardcodedD = [
-  {name: "Beautiful People", artist: "The Black Keys", album: "This is Nowhere", id: 1}, 
-  {name: "City of Stars", artist: "Ryan Gosling", album: "La La Land", id: 2}, 
-  {name: "A Lovely Night", artist: "Ryan Gosling, Emma Stone", album: "La La Land", id: 3}, 
-  {name: "Autumn Leaves", artist: "Emmy Rossum", album: "Sentimental Journey", id: 4}, 
-  {name: "Smile", artist: "Nat King Cole", album: "Ballads Of The Day", id: 5}, 
+  {name: "Beautiful People", artist: "The Black Keys", album: "This is Nowhere", id: 1, uri: 1}, 
+  {name: "City of Stars", artist: "Ryan Gosling", album: "La La Land", id: 2, uri: 2}, 
+  {name: "A Lovely Night", artist: "Ryan Gosling, Emma Stone", album: "La La Land", id: 3, uri: 3}, 
+  {name: "Autumn Leaves", artist: "Emmy Rossum", album: "Sentimental Journey", id: 4, uri: 4}, 
+  {name: "Smile", artist: "Nat King Cole", album: "Ballads Of The Day", id: 5, uri: 5}, 
 ]
 
 function App() {
@@ -17,10 +17,10 @@ function App() {
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
   
+  
   function addTrack(track) {
     // Check if the track is already in the playlist state, if it is, do nothing
     for (let t of playlist) {
-      console.log(t, t.id, track.id);
       if (t.id === track.id) {
         return
       }
@@ -40,8 +40,17 @@ function App() {
 
   function saveToSpotify() {
     // Check if playlistName is not empty
-    // Check if there are songs in the playlist name
-    
+    // Check if there are songs in the playlist
+
+    // create an array containing the uri of each track in the playlist.
+    const uriArr = [];
+    for (let t of playlist) {
+      uriArr.push(t.uri);
+    }
+    console.log(uriArr);
+
+    // Reset the existing playlist on the web app
+    setPlaylist([]);
   }
 
   return (

@@ -15,7 +15,6 @@ export default function Track (props) {
             break;
         default: 
     }
-
     return (
         <li className={styles.track} key={props.track.id}>
             <span>{props.track.name}</span><button className="trackButton" onClick={() => props.toggleTrack(props.track)}>{buttonType}</button>
