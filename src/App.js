@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import Playlist from './components/Playlist/Playlist.js';
+import useSpotifyAPI from "./Spotify.js"; 
 
 const tempHardcodedD = [
   {name: "Beautiful People", artist: "The Black Keys", album: "This is Nowhere", id: 1, uri: 1}, 
@@ -16,7 +17,42 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
+  const [searchTerm, setSearchTerm] = useState([]);
   
+  useEffect(() => {
+    var url = 'https://accounts.spotify.com/authorize';
+    var client_id = 'f346e3dbc48d4431bfe48a4f2cb7517f';
+    var redirect_uri = 'http://localhost:3000/';
+
+    var state = Math.floor(Math.random()*1000);
+    localStorage.setItem("stateKey", state);
+
+    var scope = 'user-read-private user-read-email';
+    
+    url += '?response_type=token';
+    url += '&client_id=' + encodeURIComponent(client_id);
+    url += '&scope=' + encodeURIComponent(scope);
+    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+    url += '&state=' + encodeURIComponent(state);
+
+    window.location.href = url;
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    let token = window.localStorage.getItem('token');
+  
+    if (!token && hash) {
+      token = hash.substring(1).split('&').find(elem => elem.startsWith('access_token')).split('=')[1];
+      window.location.hash = '';
+      window.sessionStorage.setItem('token', token);
+    }
+    // Now you can use the token to make requests to the Spotify API
+  }, []);
+  
+  function searchSpotifyAPI () {
+
+  }
   
   function addTrack(track) {
     // Check if the track is already in the playlist state, if it is, do nothing
@@ -56,7 +92,7 @@ function App() {
   return (
     <div className="App">
 
-        <SearchBar setSearchResults={setSearchResults}/>
+        <SearchBar setSearchResults={setSearchResults} setSearchTerm={setSearchTerm} searchSpotifyAPI={searchSpotifyAPI}/>
 
         <SearchResults searchResults={tempHardcodedD} setPlaylist={setPlaylist} addTrack={addTrack}/>
     

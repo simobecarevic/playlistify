@@ -20,6 +20,7 @@ Hints
 */
 
 
-export default function useSpotifyApi () {
+export default async function useSpotifyApi() {
+
 
 };
