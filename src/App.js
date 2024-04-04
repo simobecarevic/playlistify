@@ -20,38 +20,47 @@ function App() {
   const [searchTerm, setSearchTerm] = useState([]);
   
   useEffect(() => {
-    var url = 'https://accounts.spotify.com/authorize';
-    var client_id = 'f346e3dbc48d4431bfe48a4f2cb7517f';
-    var redirect_uri = 'http://localhost:3000/';
+    // If the logic that redirects the user to the Spotify authorization URL does not properly check if an access token already exists or if the current URL already includes an access token, it could continuously redirect the user, causing the app to reload endlessly. 
+    // This fixed the bug of Endless Re-loading 
+    if (!sessionStorage.getItem('token')) {
+      var url = 'https://accounts.spotify.com/authorize';
+      var client_id = 'f346e3dbc48d4431bfe48a4f2cb7517f';
+      var redirect_uri = 'http://localhost:3000/';
 
-    var state = Math.floor(Math.random()*1000);
-    localStorage.setItem("stateKey", state);
+      var state = Math.floor(Math.random()*1000);
+      sessionStorage.setItem("stateKey", state);
 
-    var scope = 'user-read-private user-read-email';
-    
-    url += '?response_type=token';
-    url += '&client_id=' + encodeURIComponent(client_id);
-    url += '&scope=' + encodeURIComponent(scope);
-    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    url += '&state=' + encodeURIComponent(state);
+      var scope = 'user-read-private user-read-email';
+      
+      url += '?response_type=token';
+      url += '&client_id=' + encodeURIComponent(client_id);
+      url += '&scope=' + encodeURIComponent(scope);
+      url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+      url += '&state=' + encodeURIComponent(state);
 
-    window.location.href = url;
-  }, []);
+      // This line alone was causing bug
+      window.location.href = url;
+    }
+  }, []); // the empty dependency arr won't stop the reloading bc changing window.location.href, and the Spotify API or WB resending us back to App URL (bc URI w access token already sent) is re-MOUNTING of resources
 
   useEffect(() => {
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem('token');
+    const hash = window.location.hash.substring(1); // Remove the '#' symbol
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token'); // Get the 'access_token' parameter
+    sessionStorage.setItem('token', token);
+    window.location.hash = '';
+  }, [])
   
-    if (!token && hash) {
-      token = hash.substring(1).split('&').find(elem => elem.startsWith('access_token')).split('=')[1];
-      window.location.hash = '';
-      window.sessionStorage.setItem('token', token);
-    }
-    // Now you can use the token to make requests to the Spotify API
-  }, []);
-  
-  function searchSpotifyAPI () {
+  async function searchSpotifyAPI () {
+      try {
+        const token = sessionStorage.getItem('token');
+        fetch( , {
+          method: "GET"
+        })
+      }
+      catch (e) {
 
+      }
   }
   
   function addTrack(track) {
