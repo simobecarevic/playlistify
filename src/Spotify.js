@@ -19,8 +19,36 @@ Hints
 
 */
 
+export default async function SpotifyApi(hashIsPresent) {
+    console.log(hashIsPresent);
+    
+    if (!hashIsPresent) {
+        
+        var url = 'https://accounts.spotify.com/authorize';
+        var client_id = 'f346e3dbc48d4431bfe48a4f2cb7517f';
+        var redirect_uri = 'http://localhost:3000/';
 
-export default async function useSpotifyApi() {
+        var scope = 'user-read-private user-read-email';
+        var stateKey = String(Math.floor(Math.random()*1000));
+        
+        url += '?response_type=token';
+        url += '&client_id=' + encodeURIComponent(client_id);
+        url += '&scope=' + encodeURIComponent(scope);
+        url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+        url += '&state=' + encodeURIComponent(stateKey);
+        
+        window.location.href = url; // reassigning or setting the value of window.location.href (not window.location.url, which is not a standard property) causes the web page to navigate to the new URL specified. This action effectively refreshes the page, as it unloads the current document, clears existing JavaScript state, and loads a new page from the specified URL. This behavior is similar to the user entering a new URL in the browser's address bar or clicking on a link.
+    }
+    else { 
+        const hash = window.location.hash.substring(1); // remove # symbol
+        
+        const params = new URLSearchParams(hash);
+        // Get the 'access_token' parameter
+        const token = params.get('access_token'); 
+        const expiresIn = params.get('expires_in');
 
-
+        window.location.hash = '';
+        console.log(token, expiresIn);
+        return [token, expiresIn];
+    }
 };
