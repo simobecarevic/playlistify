@@ -53,8 +53,10 @@ function App() {
 
   console.log(tokenAndExpiry);
 
-  async function searchSpotifyAPI(token, searchTerm, setSearchTerm) {
+  async function searchSpotifyAPI(tokenAndExpiry, searchTerm, setSearchResults) {
     
+    let token = tokenAndExpiry[0]; 
+    console.log(token);
     let queryTerm = searchTerm.split(" ").join("%2520");
     const endpoint = `https://api.spotify.com/v1/search?q=${queryTerm}&type=track&limit=10`;
     try {
@@ -68,8 +70,8 @@ function App() {
         if (response.ok) {
           console.log(response);
           const jsonResponse = await response.json(); 
-          console.log(jsonResponse);
-          setSearchTerm("");
+          console.log(jsonResponse.tracks.items);
+          setSearchResults(jsonResponse.tracks.items);
         }
     }
     catch(e) {
@@ -117,7 +119,7 @@ function App() {
 
         <SearchBar setSearchResults={setSearchResults} setSearchTerm={setSearchTerm} searchSpotifyAPI={searchSpotifyAPI} tokenAndExpiry={tokenAndExpiry} searchTerm={searchTerm}/>
 
-        <SearchResults searchResults={tempHardcodedD} setPlaylist={setPlaylist} addTrack={addTrack}/>
+        <SearchResults searchResults={searchResults} setPlaylist={setPlaylist} addTrack={addTrack}/>
     
         <Playlist playlist={playlist} playlistName={playlistName} handlePlaylistNameChange={handlePlaylistNameChange} removeTrack={removeTrack} saveToSpotify={saveToSpotify}/>
 
