@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Outstanding things to do
+
+- Add Styling (use Tailwind or Bootstrap)
+- Create UI feedback (not the alert() call) for when i) search bar is empty and clicked ii) trying to add an already added track iii) playlist name is empty and playlist is empty and try to save to spotify
+- Add Testing (Jest or Mocha)
+- Figure out how to Get rid of Token in URL (perhaps using Fetch API w cors mode)
+
 ## Available Scripts
 
 In the project directory, you can run:
