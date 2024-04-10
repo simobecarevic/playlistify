@@ -11,7 +11,7 @@ export default function Playlist (props) {
             <Tracklist tracks={props.playlist} type="Playlist" toggleTrack={props.removeTrack}/>
         
             <button onClick={props.saveToSpotify}>Save to Spotify</button>
-        </div>    
+        </div>
     ); 
     
 }
