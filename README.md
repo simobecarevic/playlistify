@@ -4,6 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Outstanding things to do
 
+- Try again to post on GitHub Pages, use this tutorial: https://github.com/gitname/react-gh-pages 
 - Add Styling (use Tailwind or Bootstrap)
 - Create UI feedback (not the alert() call) for when i) search bar is empty and clicked ii) trying to add an already added track iii) playlist name is empty and playlist is empty and try to save to spotify
 - Add Testing (Jest or Mocha)
@@ -75,3 +76,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+

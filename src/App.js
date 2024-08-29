@@ -12,7 +12,7 @@ import Playlist from './components/Playlist/Playlist.js';
   {name: "Autumn Leaves", artist: "Emmy Rossum", album: "Sentimental Journey", id: 4, uri: 4}, 
   {name: "Smile", artist: "Nat King Cole", album: "Ballads Of The Day", id: 5, uri: 5}, 
 ]
- */
+*/
 
 function App() {
 
@@ -64,8 +64,8 @@ function App() {
     // Get the 'access_token' parameter
     console.log(params.get('access_token'), params.get('expires_in'));
     setTokenAndExpiry([params.get('access_token'), params.get('expires_in')]);
-/*     window.location.hash=''; */  // This causes BUG, somehow values of token and expiresIn are lost; chatGPT says no hoisting but seems to be the case
-  }, [])
+      /* window.location.hash=''; */  // This causes BUG, somehow values of token and expiresIn are lost; chatGPT says no hoisting but seems to be the case
+    }, []); 
 
   async function searchSpotifyAPI() {
     
@@ -170,12 +170,13 @@ function App() {
         public: true,
         collaborative: false
       })
-    }
+    };
+
     console.log(createPlaylistOptions);
 
     // Create new playlist via POST request
     try {
-      console.log('TESt');
+      console.log('TEST');
       const createPlaylist = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, createPlaylistOptions);
       console.log(createPlaylist);
       if (createPlaylist.ok) {
@@ -191,8 +192,8 @@ function App() {
     }
 
     console.log(playlistID);
-
-    // Create an array containing the uri of each track in the playlist; will use in adding them to created playlist
+    
+    // Create an array containing the URI of each track in the playlist; will use in adding them to created playlist
     const uriArr = [];
     for (let t of playlist) {
       uriArr.push(t.uri);
