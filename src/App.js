@@ -29,7 +29,7 @@ function App() {
   if (!hashIsPresent) {
     var url = 'https://accounts.spotify.com/authorize';
     var client_id = 'f346e3dbc48d4431bfe48a4f2cb7517f';
-    var redirect_uri = 'https://simobecarevic.github.io/playlistize/';
+    var redirect_uri = 'https://simobecarevic.github.io/playlistify/';
 
     var scope = 'user-read-private user-read-email playlist-modify-private playlist-modify-public';
     var stateKey = String(Math.floor(Math.random()*1000));
@@ -46,7 +46,7 @@ function App() {
   useEffect(() => { 
 
     /* Fix bug of having to click "search" twice to search API bc URL get back from Spotify get the string of what comes after */
-    const urlSubstrings = window.location.href.split('simobecarevic.github.io/playlistize/');
+    const urlSubstrings = window.location.href.split('simobecarevic.github.io/playlistify/');
     console.log(urlSubstrings);
     const afterSlash = urlSubstrings[1];
     console.log(afterSlash, afterSlash[0]);
